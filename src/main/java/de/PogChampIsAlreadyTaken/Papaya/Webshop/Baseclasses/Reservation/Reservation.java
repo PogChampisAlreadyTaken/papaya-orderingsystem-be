@@ -1,4 +1,4 @@
-package de.PogChampIsAlreadyTaken.Papaya.Webshop.Baseclasses;
+package de.PogChampIsAlreadyTaken.Papaya.Webshop.Baseclasses.Reservation;
 
 import io.quarkus.hibernate.orm.panache.PanacheEntity;
 
