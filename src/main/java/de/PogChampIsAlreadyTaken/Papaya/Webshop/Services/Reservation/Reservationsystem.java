@@ -2,22 +2,17 @@ package de.PogChampIsAlreadyTaken.Papaya.Webshop.Services.Reservation;
 
 import de.PogChampIsAlreadyTaken.Papaya.Webshop.Baseclasses.Reservation.Reservation;
 import de.PogChampIsAlreadyTaken.Papaya.Webshop.Baseclasses.Reservation.RestaurantTable;
-import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
-import io.quarkus.hibernate.orm.panache.PanacheQuery;
 
 import javax.transaction.Transactional;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.sql.Date;
-import java.sql.Time;
-import java.sql.Timestamp;
-import java.time.Duration;
-import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
+/**
+ * @author Franziska Hesselfeld
+ */
 @Path("/reservation")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
@@ -35,7 +30,13 @@ public class Reservationsystem {
 
     @POST
     @Transactional
-    public Response postReservation(Reservation reservation) {
+    public Response postReservation(String data) {
+        /*
+        Reservation reservation = new Reservation();
+        reservation.name = name;
+        reservation.tableid = tableid;
+        reservation.phonenumber = phonenumber;
+        reservation.reservationsdate = new Date(reservationsdate);*/
         //buissness logic
         //only persist, if
         /*
@@ -55,19 +56,29 @@ Sonst: Fehlerfall --> Tisch kann nicht reserviert werden, andere Zeit wählen
 POST: CheckAvailability
 POSt: Reservation
          */
-        reservation.persist();
-        return Response.ok().entity(reservation).build();
+
+        //reservation.persist();
+        return Response.ok().entity(data).build();
     }
-    
-    @GET
-    public Response getFreeTables(Date reservationDateWanted, Time reservationTimeWanted){
+
+    @Path("/table")
+    @POST
+    @Transactional
+    public Response getFreeTable(long dateTime){
+        //get times, where tables are free mit einer Zeitspanne von einer halben Stunde und 15 Minuten-Takt zurück
+        Date date = new Date(dateTime);
+
+        // get all Reservation on this day:
+        List<Reservation> reservatedTablesAtSpecificDay = Reservation.list("reservationdate", date);
+
         //get all free tables at a specific time
         // get all Reservation on this day:
-        List<Reservation> reservatedTablesAtSpecificDay = Reservation.list("reservationdate", reservationDateWanted);
-        List<Reservation> alreadyTaken = new ArrayList<Reservation>();
+        //List<Reservation> reservatedTablesAtSpecificDay = Reservation.list("reservationdate", date);
+       // List<Reservation> alreadyTaken = new ArrayList<Reservation>();
 
         //for checking free table
-        LocalTime reservationTimeWantedLoc = reservationTimeWanted.toLocalTime();
+        /*
+        LocalDate reservationTimeWantedLoc = date.toLocalDate();
         int duration = LocalTime.of(2,0).getHour();
         LocalTime reservationTimeWantedMin = reservationTimeWantedLoc.plusHours(duration);
         LocalTime reservationTimeWantedMax = reservationTimeWantedLoc.minusHours(duration);
@@ -85,11 +96,11 @@ POSt: Reservation
         });
 
         List<RestaurantTable> restaurantTable = RestaurantTable.listAll();
-        
+        */
 
         //find all reservations, which will be in the futuret
-        List<RestaurantTable> freeTables = new ArrayList<>();
-        return Response.ok().entity(freeTables).build();
+        //List<RestaurantTable> freeTables = new ArrayList<>();
+        return Response.ok().entity(reservatedTablesAtSpecificDay).build();
     }
 
 
