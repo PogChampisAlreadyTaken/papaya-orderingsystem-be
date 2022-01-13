@@ -16,6 +16,13 @@ spec:
         - image: l1n77/papaya-orderingsystem-be
           imagePullPolicy: Always
           name: papaya-orderingsystem-be
+          env:
+            - name: MAIL_USERNAME
+              value: ${{ secrets.MAIL_USERNAME }}
+            - name: MAIL_EMAIL
+              value: ${{ secrets.MAIL_EMAIL }}
+            - name: MAIL_PASSWORD
+                value: ${{ secrets.MAIL_PASSWORD }}
 
 ---
 apiVersion: v1
