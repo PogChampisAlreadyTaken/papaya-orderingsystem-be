@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: papaya-orderingsystem-be
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: papaya-orderingsystem-be
+  template:
+    metadata:
+      labels:
+        app: papaya-orderingsystem-be
+    spec:
+      containers:
+        - image: l1n77/papaya-orderingsystem-be
+          imagePullPolicy: Always
+          name: papaya-orderingsystem-be
+          args: ["$(MAIL_USERNAME) $(MAIL_PASSWORD)"]
+          env:
+            # Define the environment variable
+            - name: MAIL_PASSWORD
+              valueFrom:
+                configMapKeyRef:
+                  # The ConfigMap containing the value you want to assign to SPECIAL_LEVEL_KEY
+                  name: config-app
+                  # Specify the key associated with the value
+                  key: MAIL_PASSWORD
+            # Define the environment variable
+            - name: MAIL_USERNAME
+              valueFrom:
+                configMapKeyRef:
+                  # The ConfigMap containing the value you want to assign to SPECIAL_LEVEL_KEY
+                  name: config-app
+                  # Specify the key associated with the value
+                  key: MAIL_USERNAME
+
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: papaya-orderingsystem-be
+  annotations:
+    dev.okteto.com/auto-ingress: "true"
+spec:
+  type: ClusterIP
+  ports:
+    - name: "papaya-orderingsystem-be"
+      port: 8080
+  selector:
+    app: papaya-orderingsystem-be

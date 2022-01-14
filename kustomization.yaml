@@ -5,4 +5,4 @@ configMapGenerator:
     files:
       - config.yaml
 resources:
-  - kubernetes.yml
+  - kubernetes.yaml
