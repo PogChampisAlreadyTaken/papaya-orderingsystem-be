@@ -16,9 +16,9 @@ spec:
         - image: l1n77/papaya-orderingsystem-be
           imagePullPolicy: Always
           name: papaya-orderingsystem-be
-          env_file:
-            -.env
-
+          args:
+            - MAIL_PASSWORD=$MAIL_PASSWORD
+            - MAIL_USERNAME=$MAIL_USERNAME
 ---
 apiVersion: v1
 kind: Service
