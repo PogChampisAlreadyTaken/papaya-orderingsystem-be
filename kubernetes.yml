@@ -22,6 +22,7 @@ spec:
             - name: MAIL_PASSWORD
               value: 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
 
+
 ---
 apiVersion: v1
 kind: Service
