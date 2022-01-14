@@ -18,9 +18,9 @@ spec:
           name: papaya-orderingsystem-be
           env:
             - name: MAIL_USERNAME
-              value: ${{ secrets.MAIL_USERNAME }}
+              value: $MAIL_USERNAME
             - name: MAIL_PASSWORD
-                value: ${{ secrets.MAIL_PASSWORD }}
+              value: $MAIL_PASSWORD
 
 ---
 apiVersion: v1
