@@ -16,6 +16,7 @@ spec:
         - image: l1n77/papaya-orderingsystem-be
           imagePullPolicy: Always
           name: papaya-orderingsystem-be
+          command: [ "/bin/sh", "-c", "env" ]
           envFrom:
             - configMapRef:
                 name: config-papaya
