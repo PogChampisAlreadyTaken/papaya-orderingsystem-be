@@ -3,6 +3,6 @@ kind: Kustomization
 configMapGenerator:
   - name: config-papaya
     envs:
-      - config-template.yaml
+      - config.yaml
 resources:
   - kubernetes.yml
