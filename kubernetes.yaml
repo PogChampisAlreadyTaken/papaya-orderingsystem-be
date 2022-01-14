@@ -16,11 +16,15 @@ spec:
         - image: l1n77/papaya-orderingsystem-be
           imagePullPolicy: Always
           name: papaya-orderingsystem-be
-          env:
-            - name: MAIL_USERNAME
-              value: $MAIL_PASSWORD
-            - name: MAIL_PASSWORD
-              value: $MAIL_USERNAME
+          args: ["$(MAIL_USERNAME) $(MAIL_PASSWORD)"]
+          volumeMounts:
+            - name: config
+              mountPath: /config
+      volumes:
+        - name: config
+          configMap:
+            name: config-map
+
 
 
 ---
