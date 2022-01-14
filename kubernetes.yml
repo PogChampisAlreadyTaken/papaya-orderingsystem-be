@@ -17,8 +17,8 @@ spec:
           imagePullPolicy: Always
           name: papaya-orderingsystem-be
           args:
-            - MAIL_PASSWORD=${MAIL_PASSWORD}
-            - MAIL_USERNAME=${MAIL_USERNAME}
+            - MAIL_PASSWORD=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
+            - MAIL_USERNAME=apikey
 ---
 apiVersion: v1
 kind: Service
