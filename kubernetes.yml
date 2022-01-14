@@ -20,13 +20,6 @@ spec:
           envFrom:
             - configMapRef:
                 name: config-app
-          volumeMounts:
-            - name: config-volume
-              mountPath: /etc/config
-      volumes:
-        - name: config-volume
-          configMap:
-            name: config-app
 
 
 ---
