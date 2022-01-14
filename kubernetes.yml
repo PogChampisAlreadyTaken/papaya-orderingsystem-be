@@ -19,14 +19,14 @@ spec:
           command: [ "/bin/sh", "-c", "env" ]
           envFrom:
             - configMapRef:
-                name: config-papaya
+                name: config-app
           volumeMounts:
             - name: config-volume
               mountPath: /etc/config
       volumes:
         - name: config-volume
           configMap:
-            name: config-papaya
+            name: config-app
 
 
 ---
