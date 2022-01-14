@@ -16,10 +16,6 @@ jobs:
         uses: okteto/context@latest
         with:
           token: ${{ secrets.OKTETO_TOKEN }}
-      - name: okteto namespace
-        uses: okteto/namespace@latest
-        with:
-          name: liimootbm
 
       - name: destroy old pipeline
         uses: okteto/destroy-pipeline@latest

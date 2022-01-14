@@ -12,15 +12,5 @@ import static org.hamcrest.CoreMatchers.is;
 @QuarkusTest
 public class OrderingsystemTest {
 
-    @Test
-    public void testHelloEndpoint() {
-        Jsonb jsonb = JsonbBuilder.create();
-
-        given()
-          .when().get("/hello")
-          .then()
-             .statusCode(200)
-             .body(is(jsonb.toJson("Hello Orderingsystem, QwQ")));
-    }
 
 }
