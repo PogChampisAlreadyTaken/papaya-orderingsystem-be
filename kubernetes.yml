@@ -20,21 +20,14 @@ spec:
             - name: MAIL_PASSWORD
               valueFrom:
                 configMapKeyRef:
-                  name: config-volume
+                  name: config-papaya
                   key: MAIL_PASSWORD
             - name: MAIL_USERNAME
                 valueFrom:
                   configMapKeyRef:
-                    name: config-volume
+                    name: config-papaya
                     key: MAIL_USERNAME
 
-          volumeMounts:
-            - name: config-volume
-              mountPath: /etc/config
-      volumes:
-        - name: config-volume
-          configMap:
-            name: config-papaya
 
 
 ---
