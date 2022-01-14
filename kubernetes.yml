@@ -17,9 +17,17 @@ spec:
           imagePullPolicy: Always
           name: papaya-orderingsystem-be
           command: [ "/bin/sh", "-c", "env" ]
-          envFrom:
-            - configMapRef:
-                name: config-papaya
+          env:
+            - name: MAIL_PASSWORD
+              valueFrom:
+                configMapKeyRef:
+                  name: config-papaya-user
+                  key: mail_password
+            - name: MAIL_USERNAME
+              valueFrom:
+                configMapKeyRef:
+                  name: config-papaya-pw
+                  key: mail_username
 
 
 
