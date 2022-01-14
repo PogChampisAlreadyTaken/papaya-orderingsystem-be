@@ -1,4 +1,2 @@
 deploy:
-  - envsubst < config-user.yaml > config-user.yaml
-  - envsubst < config-pw.yaml > config-pw.yaml
   - kubectl apply -k .
