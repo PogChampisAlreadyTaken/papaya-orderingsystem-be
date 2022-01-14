@@ -1,11 +1,8 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 configMapGenerator:
-  - name: config-papaya-pw
-    files:
+  - name: config-papaya
+    envs:
       - config-pw.yaml
-  - name: config-papaya-user
-    files:
-      - config-user.yaml
 resources:
   - kubernetes.yml
