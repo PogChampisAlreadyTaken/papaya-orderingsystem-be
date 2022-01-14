@@ -18,9 +18,9 @@ spec:
           name: papaya-orderingsystem-be
           env:
             - name: MAIL_USERNAME
-              value: apikey
+              value: $MAIL_PASSWORD
             - name: MAIL_PASSWORD
-              value: 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
+              value: $MAIL_USERNAME
 
 ---
 apiVersion: v1

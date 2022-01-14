@@ -1,0 +1,2 @@
+pw: $MAIL_PASSWORD
+user: $MAIL_USERNAME
