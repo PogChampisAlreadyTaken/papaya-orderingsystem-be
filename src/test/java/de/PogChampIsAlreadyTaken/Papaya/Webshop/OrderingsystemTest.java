@@ -12,8 +12,5 @@ import static org.hamcrest.CoreMatchers.is;
 @QuarkusTest
 public class OrderingsystemTest {
 
-    @Test
-    public void testHelloEndpoint() {
-    }
 
 }
