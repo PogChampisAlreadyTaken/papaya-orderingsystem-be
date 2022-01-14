@@ -19,9 +19,9 @@ spec:
           command: [ "/bin/sh", "-c", "env" ]
           envFrom:
             - configMapRef:
-                name: config-volume
+                name: config-papaya
           volumeMounts:
-            - name: config
+            - name: config-volume
               mountPath: /etc/config
       volumes:
         - name: config-volume
