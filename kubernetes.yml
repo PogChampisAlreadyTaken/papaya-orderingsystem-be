@@ -16,17 +16,9 @@ spec:
         - image: l1n77/papaya-orderingsystem-be
           imagePullPolicy: Always
           name: papaya-orderingsystem-be
-          env:
-            - name: MAIL_PASSWORD
-              valueFrom:
-                configMapKeyRef:
-                  name: config-papaya
-                  key: MAIL_PASSWORD
-            - name: MAIL_USERNAME
-                valueFrom:
-                  configMapKeyRef:
-                    name: config-papaya
-                    key: MAIL_USERNAME
+          envFrom:
+            - configMapRef:
+                name: config-papaya
 
 
 
