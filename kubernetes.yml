@@ -22,6 +22,7 @@ spec:
             - name: MAIL_PASSWORD
               value: $MAIL_USERNAME
 
+
 ---
 apiVersion: v1
 kind: Service
