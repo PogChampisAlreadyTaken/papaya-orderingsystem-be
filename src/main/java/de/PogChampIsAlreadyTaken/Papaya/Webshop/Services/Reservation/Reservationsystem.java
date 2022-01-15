@@ -9,7 +9,7 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.sql.Date;
-import java.util.Arrays;
+import java.sql.Timestamp;
 import java.util.List;
 
 /**
@@ -23,93 +23,70 @@ public class Reservationsystem {
 
     @POST
     @Transactional
-    @Path("/tables")
-    public Response postTable(RestaurantTable[] tables) {
-        LOG.info("POSt new Tables: "+Arrays.toString(tables));
+    @Path("/{time}/{name}/{tableid}")
+    public Response postReservation(@PathParam("time") Long time,
+                                    @PathParam("name") String name,
+                                    @PathParam("tableid") int tableid,
+                                    String phonenumber) {
+        LOG.info("POST new Reservation for table: "+tableid);
 
-        if(tables == null){
-            LOG.error("There is no table to be inserted.");
-            return Response.status(400).entity("There is no table to be inserted in this request").build();
-        }
-        for (RestaurantTable table : tables) {
-            //check if table to be inserted already exist
-            if(RestaurantTable.findById(table.id) == null){
-                LOG.error("Table already exist. Table: "+table.toString());
-                return Response.status(409).entity("Table already exist. Table: "+table.toString()).build();
-            }
-            table.persist();
+        //check input before processing
+        if(name.isEmpty() || name.equals(" ")){
+            return Response.status(470).entity("Name is empty").build();
+        } else if(tableid == 0) {
+            return Response.status(471).entity("TableId is empty").build();
         }
 
-        LOG.info("Tables successful created. New tables: "+Arrays.toString(tables));
-        return Response.ok().status(201).build();
-    }
+        Date date = new Date(time);
 
-    @POST
-    @Transactional
-    @Path("/{time}")
-    public Response postReservation(@PathParam("time") Long time, Reservation reservation) {
-        //übersetze long in time
-        //reservation.persist();
-        return Response.ok().entity(reservation).build();
-    }
+        Reservation newReservation = new Reservation();
+        newReservation.reservation_timestamp = new Timestamp(time);
+        newReservation.reservation_date = date;
+        newReservation.tableid = tableid;
+        newReservation.phonenumber = Long.parseLong(phonenumber);
+        newReservation.name = name;
 
-    @Path("/table")
-    @POST
-    @Transactional
-    public Response getFreeTable(long dateTime){
-        //get times, where tables are free mit einer Zeitspanne von einer halben Stunde und 15 Minuten-Takt zurück
-        Date date = new Date(dateTime);
-
-        // get all Reservation on this day:
-        List<Reservation> reservatedTablesAtSpecificDay = Reservation.list("reservationdate", date);
-
-        //get all free tables at a specific time
-        // get all Reservation on this day:
-        //List<Reservation> reservatedTablesAtSpecificDay = Reservation.list("reservationdate", date);
-       // List<Reservation> alreadyTaken = new ArrayList<Reservation>();
-
-        //for checking free table
-        /*
-        LocalDate reservationTimeWantedLoc = date.toLocalDate();
-        int duration = LocalTime.of(2,0).getHour();
-        LocalTime reservationTimeWantedMin = reservationTimeWantedLoc.plusHours(duration);
-        LocalTime reservationTimeWantedMax = reservationTimeWantedLoc.minusHours(duration);
-
-        //check if a table is reservated at the time
-        reservatedTablesAtSpecificDay.forEach(reservation -> {
-            if(reservationTimeWantedLoc.compareTo(reservationTimeWanted.toLocalTime()) == 0){
-                alreadyTaken.add(reservation);
+        //check if Reservation already exist
+        List<Reservation> allReservations = Reservation.findAllReservationOnSpecificDay(newReservation.reservation_date);
+        for(Reservation reservation: allReservations){
+            if(newReservation.equals(reservation)){
+                LOG.error("Reservation already exist: "+reservation.toString());
+                return Response.status(409).entity("Reservation already exist").build();
             }
-            if(reservation.reservationtime.toLocalTime().compareTo(reservationTimeWantedMax) < 0 &&
-                reservation.reservationtime.toLocalTime().compareTo(reservationTimeWantedMin) > 0){
-                //table is already tanken
-                alreadyTaken.add(reservation);
-            }
-        });
+        }
 
-        List<RestaurantTable> restaurantTable = RestaurantTable.listAll();
-        */
-
-        //find all reservations, which will be in the futuret
-        //List<RestaurantTable> freeTables = new ArrayList<>();
-        return Response.ok().entity(reservatedTablesAtSpecificDay).build();
+        newReservation.persist();
+        LOG.info("Successful created Reservation for table: "+tableid);
+        return Response.ok().entity(newReservation.toString()).build();
     }
 
 
 
-    //Delete a table
-    @DELETE
+
+    @Path("/table/{datetime}/{seats}")
+    @GET
     @Transactional
-    @Path("/tables/{id}")
-    public Response deleteTable(@PathParam("id") long id) {
+    public Response getFreeTable(@PathParam("datetime") long dateTime, @PathParam("seats") int seats){
+        LOG.info("GET free table on: "+dateTime+" for "+seats+" people");
 
-        RestaurantTable table = RestaurantTable.findById(id);
-        if (table == null)
-            return Response.status(404).build();
+        //first, check input
+        if(seats == 0){
+            return Response.status(463).entity("Personenanzahl darf nicht 0 sein!").build();
+        } else if (seats > 8){
+            return Response.status(464).entity("Personenanzahl darf nicht größer als 8 sein!").build();
+        }
 
-        table.delete();
-        return Response.ok().entity(table).build();
+
+        List<RestaurantTable> freeTables = Reservation.getAllFreeTables(dateTime, seats);
+        LOG.info("Free tables found: "+freeTables.toString());
+
+        if(freeTables.isEmpty()){
+            LOG.error("No free table was found on time: "+dateTime);
+            return Response.status(465)
+                    .entity("No free table was found. Try another time. Current time: "+dateTime)
+                    .build();
+        }
+
+        return Response.ok().entity(freeTables.get(0).id).build();
     }
-
-
 }
