@@ -3,6 +3,7 @@ name: build
   push:
     branches:
       - main
+      - feature/secret
 
 jobs:
   build:
