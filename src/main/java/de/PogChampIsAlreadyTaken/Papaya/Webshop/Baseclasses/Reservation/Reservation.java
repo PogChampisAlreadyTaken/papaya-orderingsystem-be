@@ -69,14 +69,19 @@ public class Reservation extends PanacheEntity {
                                                                               List<RestaurantTable> tables){
 
         //checken ob passende Tische in der reservations list liegen --> denn danach kann ich dann dne Tisch auswählen und zurück schicken
-
+        //hier schmeißt es einen Fehler
+        List<RestaurantTable> filteredTables = new ArrayList<>();
         for(RestaurantTable table: tables){
             for(Reservation reservation: filterdReservations){
-                if(table.id == reservation.id){
+                if(table.id == reservation.tableid){
                     //delete it from tables
-                    tables.remove(table);
+                    filteredTables.add(table);
                 }
             }
+        }
+
+        if (!filteredTables.isEmpty()) {
+            tables.removeAll(filteredTables);
         }
         return tables;
     }

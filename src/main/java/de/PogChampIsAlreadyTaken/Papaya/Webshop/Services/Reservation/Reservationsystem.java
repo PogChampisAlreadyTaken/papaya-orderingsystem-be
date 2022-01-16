@@ -16,14 +16,14 @@ import java.util.List;
  * @author Franziska Hesselfeld
  */
 @Path("/reservation")
-@Consumes(MediaType.APPLICATION_JSON)
-@Produces(MediaType.APPLICATION_JSON)
 public class Reservationsystem {
     private static final Logger LOG = Logger.getLogger(Reservationsystem.class);
 
     @POST
     @Transactional
     @Path("/{time}/{name}/{tableid}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
     public Response postReservation(@PathParam("time") Long time,
                                     @PathParam("name") String name,
                                     @PathParam("tableid") int tableid,
@@ -37,6 +37,7 @@ public class Reservationsystem {
             return Response.status(471).entity("TableId is empty").build();
         }
 
+        //tableid is not in the database
         Date date = new Date(time);
 
         Reservation newReservation = new Reservation();
@@ -66,6 +67,7 @@ public class Reservationsystem {
     @Path("/table/{datetime}/{seats}")
     @GET
     @Transactional
+    @Produces(MediaType.APPLICATION_JSON)
     public Response getFreeTable(@PathParam("datetime") long dateTime, @PathParam("seats") int seats){
         LOG.info("GET free table on: "+dateTime+" for "+seats+" people");
 
