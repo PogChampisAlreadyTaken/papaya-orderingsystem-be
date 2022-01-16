@@ -16,7 +16,6 @@ spec:
         - image: l1n77/papaya-orderingsystem-be
           imagePullPolicy: Always
           name: papaya-orderingsystem-be
-          args: ["$(MAIL_USERNAME) $(MAIL_PASSWORD)"]
           volumeMounts:
             - name: config
               mountPath: /config
