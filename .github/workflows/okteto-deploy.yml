@@ -2,7 +2,7 @@ name: deploy
 on:
   workflow_run:
     workflows: ["build"]
-    branches: [feature/secret]
+    branches: [main]
     types: [completed]
 
 jobs:
