@@ -17,12 +17,12 @@ spec:
           imagePullPolicy: Always
           name: papaya-orderingsystem-be
           volumeMounts:
-            - name: config
-              mountPath: /config
+            - name: config-volume
+              mountPath: /etc/config
       volumes:
-        - name: config
+        - name: config-volume
           configMap:
-            name: config-
+            name: config-map
 
 
 ---
