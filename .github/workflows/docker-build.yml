@@ -5,10 +5,6 @@ name: build
       - main
 
 
-env:
-  MAIL_PASSWORD: "123"
-  MAIL_USERNAME: "123"
-
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -29,8 +25,8 @@ jobs:
       - name: build and package Quarkus
         run: |
           chmod +x mvnw |
-          sudo ./mvnw package
-
+          sudo ./mvnw compile -B |
+          sudo ./mvnw test -B
 
       - name: Build and push
         id: docker_build
