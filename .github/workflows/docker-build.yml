@@ -4,6 +4,11 @@ name: build
     branches:
       - main
 
+
+env:
+  MAIL_PASSWORD: "123"
+  MAIL_USERNAME: "123"
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -25,9 +30,7 @@ jobs:
         run: |
           chmod +x mvnw |
           sudo ./mvnw package
-        env:
-          MAIL_PASSWORD: "123"
-          MAIL_USERNAME: "123"
+
 
       - name: Build and push
         id: docker_build
