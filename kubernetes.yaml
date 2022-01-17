@@ -24,12 +24,12 @@ spec:
             - name: MAIL_PASSWORD
               valueFrom:
                 configMapKeyRef:
-                  key: MAIL_PASSWORD
+                  key: mail_password
                   name: config-app
             - name: MAIL_USERNAME
               valueFrom:
                 configMapKeyRef:
-                  key: MAIL_USERNAME
+                  key: mail_username
                   name: config-app
           volumeMounts:
             - name: config-volume
