@@ -32,25 +32,27 @@ public class Orderingservice {
         Gson gson = new Gson();
         List<Orderparse> orderparseList = new LinkedList<>();
         List<DeliveryOrder> deliveryOrders = DeliveryOrder.findByOrderbyCustomer(customer);
-        deliveryOrders.forEach((order)->{
+        deliveryOrders.forEach((order) -> {
             Orderparse orderparse = new Orderparse();
             orderparse.setOrderID(order.id);
             orderparse.setCustomer(order.getCustomer());
             orderparse.setShoppingItemList(gson.fromJson(order.getShoppingitem(), LinkedList.class));
             orderparseList.add(orderparse);
         });
-       return Response.ok().entity(orderparseList).build();
+        return Response.ok().entity(orderparseList).build();
     }
 
     @POST
     @Transactional
-    public Response postOrder(Orderparse order) {
-
+    public Response postOrder(String order) {
         Gson gson = new Gson();
+        Orderparse orderparse = gson.fromJson(order, Orderparse.class);
+
         DeliveryOrder deliveryOrder = new DeliveryOrder();
 
-        deliveryOrder.setCustomer(order.getCustomer());
-        deliveryOrder.setShoppingitem(gson.toJson(order.getShoppingItem()));
+        deliveryOrder.setCustomer(orderparse.getCustomer());
+
+        deliveryOrder.setShoppingitem(gson.toJson(orderparse.getShoppingItem()));
 
         deliveryOrder.persist();
 

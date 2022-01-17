@@ -1,6 +1,6 @@
 package de.PogChampIsAlreadyTaken.Papaya.Webshop.Baseclasses.Ordering;
 
-public class ShoppingItemParse {
+public class ShoppingItem {
 
     private Meal meal;
     private int amount;

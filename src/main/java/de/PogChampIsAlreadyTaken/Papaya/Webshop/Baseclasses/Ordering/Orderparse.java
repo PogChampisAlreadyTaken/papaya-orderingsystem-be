@@ -1,12 +1,13 @@
 package de.PogChampIsAlreadyTaken.Papaya.Webshop.Baseclasses.Ordering;
 
+
 import java.util.List;
 
 public class Orderparse {
 
     private long orderID;
     private String customer;
-    private List<ShoppingItemParse> shoppingItem;
+    private List<ShoppingItem> shoppingItem;
 
     public long getOrderID() {
         return orderID;
@@ -24,11 +25,11 @@ public class Orderparse {
         this.customer = customer;
     }
 
-    public List<ShoppingItemParse> getShoppingItem() {
+    public List<ShoppingItem> getShoppingItem() {
         return shoppingItem;
     }
 
-    public void setShoppingItemList(List<ShoppingItemParse> shoppingItem) {
+    public void setShoppingItemList(List<ShoppingItem> shoppingItem) {
         this.shoppingItem = shoppingItem;
     }
 }
