@@ -28,12 +28,6 @@ public class MailService {
     @Blocking
     @Path("/{email}")
     public void sendEmail(@PathParam String email) {
-        String databaseName = ConfigProvider.getConfig().getValue("quarkus.mailer.username", String.class);
-        System.out.println(databaseName);
-
-        String databaseName1 = ConfigProvider.getConfig().getValue("quarkus.mailer.password", String.class);
-        System.out.println(databaseName1);
-
         mailer.send(
                 Mail.withText(email,
                         "Bestellbestaetigung",

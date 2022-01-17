@@ -2,6 +2,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: papaya-orderingsystem-be
+  labels:
+    app: papaya-orderingsystem-be
 spec:
   replicas: 1
   selector:
@@ -16,7 +18,17 @@ spec:
         - image: l1n77/papaya-orderingsystem-be
           imagePullPolicy: Always
           name: papaya-orderingsystem-be
-          args: ["$(MAIL_USERNAME) $(MAIL_PASSWORD)"]
+          env:
+            - name: MAIL_USERNAME
+              valueFrom:
+                configMapKeyRef:
+                  name: config-app
+                  key: mail_username
+            - name: MAIL_PASSWORD
+              valueFrom:
+                configMapKeyRef:
+                   name: config-app
+                   key: mail_password
 
 
 ---
