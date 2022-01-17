@@ -16,3 +16,6 @@ jobs:
         run: |
           chmod +x mvnw |
           sudo ./mvnw package
+        env:
+          MAIL_PASSWORD: "123"
+          MAIL_USERNAME: "123"
