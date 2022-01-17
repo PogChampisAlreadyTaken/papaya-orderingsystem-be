@@ -18,7 +18,7 @@ spec:
         - image: l1n77/papaya-orderingsystem-be
           imagePullPolicy: Always
           name: papaya-orderingsystem-be
-          command: [ "/bin/sh", "-c", "cat /etc/config/config.template.yaml && echo && tail -f /dev/null" ]
+          command: [ "/bin/sh", "-c", "cat /etc/config/config.yaml && echo && tail -f /dev/null" ]
           volumeMounts:
             - name: config-volume
               mountPath: /etc/config
