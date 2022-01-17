@@ -19,11 +19,11 @@ spec:
           imagePullPolicy: Always
           name: papaya-orderingsystem-be
           env:
-            - name: MAIL_PASSWORD
+            - name: MAIL_USERNAME
               valueFrom:
                 configMapKeyRef:
                   name: config-app
-                  key: mail_password
+                  key: mail_username
 
           volumeMounts:
             - name: config-volume
