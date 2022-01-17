@@ -1,4 +1,4 @@
-package de.PogChampIsAlreadyTaken.Papaya.Webshop.Services;
+package de.PogChampIsAlreadyTaken.Papaya.Webshop.Services.Mail;
 
 import io.quarkus.mailer.Mail;
 import io.quarkus.mailer.Mailer;
