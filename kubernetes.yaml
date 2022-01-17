@@ -24,19 +24,11 @@ spec:
                 configMapKeyRef:
                   name: config-app
                   key: mail_username
-        # Define the environment variable
             - name: MAIL_PASSWORD
               valueFrom:
                 configMapKeyRef:
                    name: config-app
                    key: mail_password
-          volumeMounts:
-            - name: config-volume
-              mountPath: /etc/config
-      volumes:
-        - name: config-volume
-          configMap:
-            name: config-app
 
 
 ---
