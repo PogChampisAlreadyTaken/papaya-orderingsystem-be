@@ -3,7 +3,7 @@ kind: Kustomization
 namespace: liimootbm
 configMapGenerator:
   - name: config-app
-    files:
+    envs:
       - config.yaml
 resources:
   - kubernetes.yaml
