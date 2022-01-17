@@ -25,8 +25,11 @@ jobs:
       - name: build and package Quarkus
         run: |
           chmod +x mvnw |
-          sudo ./mvnw compile -B |
-          sudo ./mvnw test -B
+          sudo ./mvnw package
+        env:
+          MAIL_USERNAME: dummy
+          MAIL_PASSWORD: dummy
+
 
       - name: Build and push
         id: docker_build
