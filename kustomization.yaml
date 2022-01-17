@@ -4,6 +4,6 @@ namespace: liimootbm
 configMapGenerator:
   - name: config-app
     envs:
-      - config.yaml
+      - .env
 resources:
   - kubernetes.yaml

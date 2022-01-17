@@ -1,2 +1,2 @@
-mail_username: $MAIL_USERNAME
-mail_password: $MAIL_PASSWORD
+mail_username=$MAIL_USERNAME
+mail_password=$MAIL_PASSWORD
